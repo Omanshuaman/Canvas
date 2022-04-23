@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     .build();
             StrictMode.setThreadPolicy(policy);
         }
-
+what is hell
         send_button = findViewById(R.id.send_button_id);
         send_text = findViewById(R.id.send_text_id);
         send_text2 = findViewById(R.id.send_text_id2);
