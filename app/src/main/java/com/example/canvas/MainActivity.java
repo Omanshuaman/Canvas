@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.Button;
 import android.widget.EditText;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -28,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(Build.VERSION.SDK_INT > 21)
-        {
+        if (Build.VERSION.SDK_INT > 21) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll()
                     .build();
@@ -42,33 +42,35 @@ public class MainActivity extends AppCompatActivity {
 
         send_button.setOnClickListener(v -> {
 
-                String str = send_text.getText().toString();
-                String str2 = send_text2.getText().toString();
+            String str = send_text.getText().toString();
+            String str2 = send_text2.getText().toString();
 
-                // Create the Intent object of this class Context() to Second_activity class
-                Intent intent = new Intent(getApplicationContext(), Second_activity.class);
+            // Create the Intent object of this class Context() to Second_activity class
+            Intent intent = new Intent(getApplicationContext(), Second_activity.class);
 
-                intent.putExtra("message_key", str);
-                intent.putExtra("message_key1", str2);
+            intent.putExtra("message_key", str);
+            intent.putExtra("message_key1", str2);
 
-                Bitmap bitmap=  loadBitmapFromUrl();
-                BitmapHelper.getInstance().setBitmap(bitmap);
-                startActivity(intent);
+            //  Bitmap bitmap = loadBitmapFromUrl();
+            Bitmap icon = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.preto);
+            BitmapHelper.getInstance().setBitmap(icon);
+            startActivity(intent);
         });
     }
-    private Bitmap loadBitmapFromUrl() {
-        try {
-            URL url = new URL("https://i.pinimg.com/564x/74/57/6f/74576fe9214f46822a0657d1d41f0104.jpg");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
 
-            InputStream inputStream = connection.getInputStream();
-            return BitmapFactory.decodeStream(inputStream);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    private Bitmap loadBitmapFromUrl() {
+//        try {
+//            URL url = new URL("https://i.pinimg.com/564x/74/57/6f/74576fe9214f46822a0657d1d41f0104.jpg");
+//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            connection.setDoInput(true);
+//            connection.connect();
+//            InputStream inputStream = connection.getInputStream();
+//            return BitmapFactory.decodeStream(inputStream);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 }
