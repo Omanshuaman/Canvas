@@ -11,12 +11,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHolder> {
 
     MyMovieData[] myMovieData;
     Context context;
 
-    public MyMovieAdapter(MyMovieData[] myMovieData,CardImageView activity) {
+    public MyMovieAdapter(MyMovieData[] myMovieData, CardImageView activity) {
         this.myMovieData = myMovieData;
         this.context = activity;
     }
@@ -25,7 +27,7 @@ public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.movie_item_list,parent,false);
+        View view = layoutInflater.inflate(R.layout.movie_item_list, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -33,8 +35,6 @@ public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final MyMovieData myMovieDataList = myMovieData[position];
-        holder.textViewName.setText(myMovieDataList.getMovieName());
-        holder.textViewDate.setText(myMovieDataList.getMovieDate());
         holder.movieImage.setImageResource(myMovieDataList.getMovieImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +59,6 @@ public class MyMovieAdapter extends RecyclerView.Adapter<MyMovieAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             movieImage = itemView.findViewById(R.id.imageview);
-            textViewName = itemView.findViewById(R.id.textName);
-            textViewDate = itemView.findViewById(R.id.textdate);
 
         }
     }
