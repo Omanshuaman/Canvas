@@ -28,7 +28,7 @@ public class CardImageView extends AppCompatActivity {
                 new MyMovieData("Batman Begins", "2005 film", R.drawable.batman),
                 new MyMovieData("Jumanji", "2019 film", R.drawable.jumanji),
                 new MyMovieData("Hulk", "2003 film", R.drawable.hulk),
-                new MyMovieData("Hulk", "2003 film", R.drawable.pexels),
+                new MyMovieData("Hulk", "2003 film", R.drawable.preto),
 
         };
 

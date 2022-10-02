@@ -3,22 +3,30 @@ package com.example.canvas;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
+
 public class Second_activity extends AppCompatActivity {
     ImageView imageView;
+    StorageReference storageReference;
+    StorageReference storageReference1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +52,10 @@ public class Second_activity extends AppCompatActivity {
 
         bitmap2 = bitmap2.copy(bitmapConfig, true);
 
+        Drawable myDrawable = getResources().getDrawable(R.drawable.avenger);
+        //   Bitmap myLogo = ((BitmapDrawable) myDrawable).getBitmap();
+
         Canvas canvas = new Canvas(bitmap2);
-
-        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setTextAlign(Paint.Align.CENTER);
-        textPaint.setTextSize(525);
-        textPaint.setTypeface(ResourcesCompat.getFont(this, R.font.ralewaythin));
-        textPaint.setColor(Color.rgb(6, 94, 105));
-        int xPos = (canvas.getWidth() / 2);
-        int yPos = 800;
-
-        Paint textPaint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint1.setTextAlign(Paint.Align.CENTER);
-        textPaint1.setTextSize(400);
-        textPaint1.setTypeface(ResourcesCompat.getFont(this, R.font.ralewaythin));
-        textPaint1.setColor(Color.rgb(6, 94, 105));
-        int xPos1 = (canvas.getWidth() / 2);
-        int yPos1 = 1190;
 
         Paint textPaint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint2.setTextAlign(Paint.Align.CENTER);
@@ -78,33 +73,6 @@ public class Second_activity extends AppCompatActivity {
         int xPos3 = (canvas.getWidth() / 2);
         int yPos3 = 2000;
 
-        Paint textPaint4 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint4.setTextAlign(Paint.Align.CENTER);
-        textPaint4.setTextSize(100);
-        textPaint4.setTypeface(ResourcesCompat.getFont(this, R.font.robotoc));
-        textPaint4.setColor(Color.rgb(248, 255, 235));
-        int xPos4 = (canvas.getWidth() / 2);
-        int yPos4 = 2750;
-
-        Paint textPaint5 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint5.setTextAlign(Paint.Align.CENTER);
-        textPaint5.setTextSize(300);
-        textPaint5.setTypeface(ResourcesCompat.getFont(this, R.font.robotoc));
-        textPaint5.setColor(Color.rgb(248, 255, 235));
-        int xPos5 = (canvas.getWidth() / 2);
-        int yPos5 = 3050;
-
-        Paint textPaint6 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint6.setTextAlign(Paint.Align.CENTER);
-        textPaint6.setTextSize(50);
-        textPaint6.setTypeface(ResourcesCompat.getFont(this, R.font.robotoc));
-        textPaint6.setColor(Color.rgb(6, 94, 105));
-        int xPos6 = (canvas.getWidth() / 2);
-        int yPos6 = 3150;
-
-        Paint mPaint = new Paint();
-
-
         Paint textPaint7 = new Paint(Paint.ANTI_ALIAS_FLAG);
         textPaint7.setTextAlign(Paint.Align.CENTER);
         textPaint7.setTypeface(ResourcesCompat.getFont(this, R.font.ralewaythin));
@@ -118,13 +86,40 @@ public class Second_activity extends AppCompatActivity {
         // canvas.drawText("MOVES", xPos1, yPos1, textPaint7);
         canvas.drawText("MOUNTAINS", xPos2, yPos2, textPaint2);
         canvas.drawText("Matthew 17:20", xPos3, yPos3, textPaint3);
-        canvas.drawText("DAY OF WORSHIP", xPos4, yPos4, textPaint4);
-        canvas.drawText("11.26.2018", xPos5, yPos5, textPaint5);
-//        canvas.drawText("Sunday | 6PM | Saint Mary's Church\n" +
-//                "4453 Broad Street | Birmingham, Alabama", xPos6, yPos6, textPaint6);
 
-        imageView.setImageBitmap(bitmap2);
+//        imageView.setImageBitmap(overlay(bitmap2, myLogo));
+        storageReference = FirebaseStorage.getInstance().getReference("images/" + "Preto" + ".png");
+        storageReference1 = FirebaseStorage.getInstance().getReference("images/" + "avenger" + ".jpeg");
 
+        try {
+            File localFile = File.createTempFile("tempFile", ".png");
+            storageReference.getFile(localFile)
+                    .addOnSuccessListener(taskSnapshot -> {
+
+                        Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                        Bitmap.Config bitmapConfig1 = bitmap.getConfig();
+                        if (bitmapConfig1 == null) {
+                            bitmapConfig1 = Bitmap.Config.ARGB_8888;
+                        }
+                        bitmap = bitmap.copy(bitmapConfig1, true);
+                        Canvas canvas1 = new Canvas(bitmap);
+                        canvas1.drawText("FAITHHHHHHHHHHHH", xPos7, yPos7, textPaint7);
+
+                        try {
+                            File localFile1 = File.createTempFile("tempFile1", ".png");
+                            Bitmap finalBitmap = bitmap;
+                            storageReference1.getFile(localFile1)
+                                    .addOnSuccessListener(taskSnapshot1 -> {
+                                        Bitmap myLogo = BitmapFactory.decodeFile(localFile1.getAbsolutePath());
+                                        imageView.setImageBitmap(overlay(finalBitmap, myLogo));
+                                    }).addOnFailureListener(e -> Toast.makeText(Second_activity.this, "No", Toast.LENGTH_SHORT).show());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).addOnFailureListener(e -> Toast.makeText(Second_activity.this, "No", Toast.LENGTH_SHORT).show());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -148,5 +143,14 @@ public class Second_activity extends AppCompatActivity {
         // Set the paint for that size.
         paint.setTextSize(desiredTextSize);
 
+    }
+
+    private Bitmap overlay(Bitmap bmp1, Bitmap bmp2) {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, 100, 200, null);
+
+        return bmOverlay;
     }
 }
