@@ -25,12 +25,29 @@ import com.example.canvas.R
 import com.example.canvas.components.InfoBox
 import com.example.canvas.components.OrderedList
 import com.example.canvas.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @ExperimentalMaterialApi
 @Composable
 fun DetailsContent(
-    selectedHero: Hero?
+    selectedHero: Hero?,
+    colors: Map<String, String>
 ) {
+    var vibrant by remember { mutableStateOf("#000000") }
+    var darkVibrant by remember { mutableStateOf("#000000") }
+    var onDarkVibrant by remember { mutableStateOf("#FFFFFF") }
+
+    LaunchedEffect(key1 = selectedHero) {
+        vibrant = colors["vibrant"]!!
+        darkVibrant = colors["darkVibrant"]!!
+        onDarkVibrant = colors["onDarkVibrant"]!!
+    }
+
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(
+        color = Color(parseColor(darkVibrant))
+    )
+
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
     )
@@ -45,8 +62,16 @@ fun DetailsContent(
         ),
         scaffoldState = scaffoldState,
         sheetPeekHeight = MIN_SHEET_HEIGHT,
-        sheetContent = { selectedHero?.let { BottomSheetContent(selectedHero = it) } },
-        content = {
+        sheetContent = {
+            selectedHero?.let {
+                BottomSheetContent(
+                    selectedHero = it,
+                    infoBoxIconColor = Color(parseColor(vibrant)),
+                    sheetBackgroundColor = Color(parseColor(darkVibrant)),
+                    contentColor = Color(parseColor(onDarkVibrant))
+                )
+            }
+        }, content = {
             selectedHero?.let { hero ->
                 BackgroundContent(
                     heroImage = hero.image,
@@ -173,7 +198,7 @@ fun BackgroundContent(
     onCloseClicked: () -> Unit
 ) {
     val imageUrl =
-        "https://image.shutterstock.com/image-vector/fraction-pie-divided-into-slices-260nw-1295518603.jpg"
+        "https://cdn.wallpapersafari.com/96/31/Vbi3JC.jpg"
     val painter = rememberImagePainter(imageUrl) {
         error(R.drawable.avatar)
     }
