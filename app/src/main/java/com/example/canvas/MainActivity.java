@@ -53,28 +53,28 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("message_key", str);
             intent.putExtra("message_key1", str2);
 
-            //  Bitmap bitmap = loadBitmapFromUrl();
+              Bitmap bitmap = loadBitmapFromUrl();
             Bitmap icon = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.preto);
+                    R.drawable.running);
             BitmapHelper.getInstance().setBitmap(icon);
             startActivity(intent);
         });
     }
 
-//    private Bitmap loadBitmapFromUrl() {
-//        try {
-//            URL url = new URL("https://i.pinimg.com/564x/74/57/6f/74576fe9214f46822a0657d1d41f0104.jpg");
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setDoInput(true);
-//            connection.connect();
-//            InputStream inputStream = connection.getInputStream();
-//            return BitmapFactory.decodeStream(inputStream);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    private Bitmap loadBitmapFromUrl() {
+        try {
+            URL url = new URL("https://i.pinimg.com/564x/74/57/6f/74576fe9214f46822a0657d1d41f0104.jpg");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            return BitmapFactory.decodeStream(inputStream);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 }

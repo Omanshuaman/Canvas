@@ -23,11 +23,11 @@ public class CardImageView extends AppCompatActivity {
 
         SnapHelper snapHelper = new PagerSnapHelper();
         MyMovieData[] myMovieData = new MyMovieData[]{
-                new MyMovieData("Avengers", "2019 film", R.drawable.avenger),
-                new MyMovieData("Venom", "2018 film", R.drawable.venom),
-                new MyMovieData("Batman Begins", "2005 film", R.drawable.batman),
-                new MyMovieData("Jumanji", "2019 film", R.drawable.jumanji),
-                new MyMovieData("Hulk", "2003 film", R.drawable.hulk),
+                new MyMovieData("Avengers", "2019 film", R.drawable.preto),
+                new MyMovieData("Venom", "2018 film", R.drawable.preto),
+                new MyMovieData("Batman Begins", "2005 film", R.drawable.preto),
+                new MyMovieData("Jumanji", "2019 film", R.drawable.preto),
+                new MyMovieData("Hulk", "2003 film", R.drawable.preto),
                 new MyMovieData("Hulk", "2003 film", R.drawable.preto),
 
         };
